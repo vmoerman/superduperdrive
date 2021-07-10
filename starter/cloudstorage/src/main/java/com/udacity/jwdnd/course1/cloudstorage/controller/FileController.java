@@ -38,8 +38,7 @@ public class FileController {
         {
             model.addAttribute("error", true);
             model.addAttribute("message", "Upload failed: File with this name already exists");
-            model.addAttribute("files", fileService.getAllFiles(currentUser.getUserId()));
-            return "home";
+            return "result";
         }
 
 
@@ -54,15 +53,15 @@ public class FileController {
         {
             model.addAttribute("error", true);
             model.addAttribute("message", "System error!" + e.getMessage());
-            return "error";
+            return "result";
         }
         model.addAttribute("files", fileService.getAllFiles(currentUser.getUserId()));
-        return "home";
+        return "result";
     }
 
     @GetMapping("/download/{fileid}")
-    public ResponseEntity<Resource> download(@PathVariable("fileId") int fileId) {
-        File file = fileService.getFileById(fileId);
+    public ResponseEntity<Resource> download(@PathVariable("fileid") int fileid) {
+        File file = fileService.getFileById(fileid);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(httpHeaders.CONTENT_DISPOSITION, "attachment; filename = " + file.getFilename());
         httpHeaders.add("Cache-control", "no-cache, no-store, must-revalidate");
