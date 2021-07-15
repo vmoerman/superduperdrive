@@ -24,7 +24,7 @@ public interface FileMapper {
     int insert(File file);
 
     @Delete("DELETE FROM FILES WHERE fileid = #{fileid} AND userid = #{userid}")
-    int delete(File file);
+    int delete(int fileid, int userid);
 
 
 

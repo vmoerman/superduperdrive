@@ -42,7 +42,6 @@ public class FileController {
         }
 
 
-
         try
         {
             fileService.saveFile(multipartFile, currentUser.getUserId());
@@ -55,7 +54,6 @@ public class FileController {
             model.addAttribute("message", "System error!" + e.getMessage());
             return "result";
         }
-        model.addAttribute("files", fileService.getAllFiles(currentUser.getUserId()));
         return "result";
     }
 
@@ -73,4 +71,25 @@ public class FileController {
                 .body(resource);
 
     }
+
+    @GetMapping("/delete/{fileid}")
+    public String deleteFile(@PathVariable("fileid") int fileid, Model model, Authentication authentication)
+    {
+        try
+        {
+            User currentUser = userService.getUser(authentication.getName());
+            fileService.deleteFile(fileid, currentUser.getUserId());
+            model.addAttribute("success", true);
+            model.addAttribute("message", "Deleted succesfully!");
+            return "result";
+        }
+        catch (Exception e)
+        {
+            model.addAttribute("error", true);
+            model.addAttribute("message", "System error!" + e.getMessage());
+            return "result";
+        }
+
+    }
+
 }

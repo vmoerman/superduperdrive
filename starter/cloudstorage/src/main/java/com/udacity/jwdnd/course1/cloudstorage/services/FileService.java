@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class FileService {
@@ -48,6 +47,12 @@ public class FileService {
     public List<File> getAllFiles(int userId)
     {
         return fileMapper.getAllFiles(userId);
+    }
+
+    public int deleteFile(int fileId, int userId)
+    {
+        int x = fileMapper.delete(fileId, userId);
+        return x;
     }
 
 }

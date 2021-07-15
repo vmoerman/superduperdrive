@@ -2,12 +2,12 @@ package com.udacity.jwdnd.course1.cloudstorage.models;
 
 public class Note {
 
-    private int noteid;
+    private Integer noteid;
     private String notetitle;
     private String notedescription;
     private int userid;
 
-    public int getNoteid() {
+    public Integer getNoteid() {
         return noteid;
     }
 
