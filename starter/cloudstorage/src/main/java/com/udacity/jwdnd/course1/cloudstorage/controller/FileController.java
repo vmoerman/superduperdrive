@@ -29,7 +29,7 @@ public class FileController {
         this.userService = userService;
     }
 
-    @PostMapping("/home")
+    @PostMapping("/file")
     public String uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile, Authentication authentication, Model model) throws IOException {
 
         User currentUser = userService.getUser(authentication.getName());
@@ -57,7 +57,7 @@ public class FileController {
         return "result";
     }
 
-    @GetMapping("/download/{fileid}")
+    @GetMapping("/file/{fileid}")
     public ResponseEntity<Resource> download(@PathVariable("fileid") int fileid) {
         File file = fileService.getFileById(fileid);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -72,7 +72,7 @@ public class FileController {
 
     }
 
-    @GetMapping("/delete/{fileid}")
+    @GetMapping("/deletefile/{fileid}")
     public String deleteFile(@PathVariable("fileid") int fileid, Model model, Authentication authentication)
     {
         try
