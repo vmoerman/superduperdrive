@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -104,6 +105,71 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("change",driver.findElement(By.id("note-title-field")).getText());
 	}
 
+	@Test
+	public void deleteNoteAndVerify() throws InterruptedException
+	{
+		signupAndLogin();
+		createNote();
+		deleteNote();
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		homePage.switchToNotesTab(wait);
+		Thread.sleep(1000);
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			driver.findElement(By.id("note-title-field"));
+		});
+	}
+
+	//	Write a test that creates a set of credentials, verifies that they are displayed, and verifies that the displayed password is encrypted.
+	@Test
+	public void createCredentialAndVerify() throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		signupAndLogin();
+		homePage.switchToCredentialsTab(wait);
+		homePage.addCredential(wait);
+		resultPage.returnToHome(wait);
+		homePage.switchToCredentialsTab(wait);
+		Thread.sleep(1000);
+		Assertions.assertEquals("bertiee",driver.findElement(By.id("credential-url-field")).getText());
+	}
+
+	//	Write a test that views an existing set of credentials, verifies that the viewable password is unencrypted, edits the credentials, and verifies that the changes are displayed.
+	@Test
+	public void editCredentialAndVerify() throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		signupAndLogin();
+		homePage.switchToCredentialsTab(wait);
+		homePage.addCredential(wait);
+		resultPage.returnToHome(wait);
+		homePage.switchToCredentialsTab(wait);
+		Thread.sleep(1000);
+		homePage.editCredential(wait);
+		resultPage.returnToHome(wait);
+		homePage.switchToCredentialsTab(wait);
+		Thread.sleep(1000);
+		Assertions.assertEquals("change",driver.findElement(By.id("credential-url-field")).getText());
+
+	}
+
+	//	Write a test that deletes an existing set of credentials and verifies that the credentials are no longer displayed.
+
+	@Test
+	public void deleteCredentialAndVerify() throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		signupAndLogin();
+		homePage.switchToCredentialsTab(wait);
+		homePage.addCredential(wait);
+		resultPage.returnToHome(wait);
+		homePage.switchToCredentialsTab(wait);
+		Thread.sleep(1000);
+		homePage.deleteCredential(wait);
+		resultPage.returnToHome(wait);
+		homePage.switchToCredentialsTab(wait);
+		Thread.sleep(1000);
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			driver.findElement(By.id("credential-url-field"));
+		});
+	}
+
 	public void signupAndLogin()
 	{
 		driver.get("http://localhost:" + this.port + "/signup");
@@ -129,5 +195,17 @@ class CloudStorageApplicationTests {
 		resultPage.returnToHome(wait);
 
 	}
+
+	private void deleteNote() throws InterruptedException
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		homePage.switchToNotesTab(wait);
+		Thread.sleep(1000);
+		homePage.deleteNote(wait);
+		resultPage.returnToHome(wait);
+
+	}
+
+
 
 }

@@ -43,6 +43,8 @@ public class CredentialService {
         Credential original = credentialMapper.getCredential(credential.getCredentialid());
         String password = encryptionService.encryptValue(credential.getPassword(),original.getKey());
         original.setPassword(password);
+        original.setUrl(credential.getUrl());
+        original.setUsername(credential.getUsername());
         credentialMapper.editCredential(original);
     }
 

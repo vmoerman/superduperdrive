@@ -17,6 +17,9 @@ public class HomePage {
     @FindBy(id = "nav-notes-tab")
     private WebElement noteTab;
 
+    @FindBy(id = "nav-credentials-tab")
+    private WebElement credentialTab;
+
     @FindBy(id = "btnAddNewNote")
     private WebElement addNoteButton;
 
@@ -34,6 +37,33 @@ public class HomePage {
 
     @FindBy(id = "note-edit-button")
     private WebElement noteEditButton;
+
+    @FindBy(id = "note-delete-button")
+    private WebElement noteDeleteButton;
+
+    @FindBy(id = "add-credential-button")
+    private WebElement addCredentialButton;
+
+    @FindBy(id = "credential-edit-button")
+    private WebElement credentialEditButton;
+
+    @FindBy(id = "credential-delete-button")
+    private WebElement credentialDeleteButton;
+
+    @FindBy(id = "credential-url")
+    private WebElement credentialUrlField;
+
+    @FindBy(id = "credential-username")
+    private WebElement credentialUsernameField;
+
+    @FindBy(id = "credential-password")
+    private WebElement credentialPasswordField;
+
+    @FindBy(id = "credentialSubmit")
+    private WebElement credentialSubmitField;
+
+
+
 
 
 
@@ -64,6 +94,12 @@ public class HomePage {
         noteTab.click();
     }
 
+    public void switchToCredentialsTab(WebDriverWait wait)
+    {
+        wait.until(ExpectedConditions.elementToBeClickable(credentialTab));
+        credentialTab.click();
+    }
+
     public void editNote(WebDriverWait wait) throws InterruptedException {
         wait.until(ExpectedConditions.elementToBeClickable(noteEditButton));
         noteEditButton.click();
@@ -74,5 +110,39 @@ public class HomePage {
         noteDescriptionField.sendKeys("change");
         noteSubmitButton.submit();
 
+    }
+
+    public void deleteNote(WebDriverWait wait)
+    {
+        wait.until(ExpectedConditions.elementToBeClickable(noteDeleteButton));
+        noteDeleteButton.click();
+    }
+
+    public void addCredential(WebDriverWait wait) throws InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(addCredentialButton));
+        addCredentialButton.click();
+        Thread.sleep(1000);
+        wait.until(webDriver -> webDriver.findElement(By.id("credential-url")));
+        credentialUrlField.sendKeys("bertiee");
+        credentialUsernameField.sendKeys("Bert");
+        credentialPasswordField.sendKeys("vissie");
+        credentialSubmitField.submit();
+    }
+
+    public void editCredential(WebDriverWait wait) throws InterruptedException
+    {
+        wait.until(ExpectedConditions.elementToBeClickable(credentialEditButton));
+        credentialEditButton.click();
+        Thread.sleep(1000);
+        wait.until(webDriver -> webDriver.findElement(By.id("credential-url")));
+        credentialUrlField.clear();
+        credentialUrlField.sendKeys("change");
+        credentialSubmitField.submit();
+    }
+
+    public void deleteCredential(WebDriverWait wait) throws InterruptedException
+    {
+        wait.until(ExpectedConditions.elementToBeClickable(credentialDeleteButton));
+        credentialDeleteButton.click();
     }
 }
