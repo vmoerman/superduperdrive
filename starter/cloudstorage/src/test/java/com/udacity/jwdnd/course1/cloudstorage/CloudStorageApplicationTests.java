@@ -130,6 +130,7 @@ class CloudStorageApplicationTests {
 		homePage.switchToCredentialsTab(wait);
 		Thread.sleep(1000);
 		Assertions.assertEquals("bertiee",driver.findElement(By.id("credential-url-field")).getText());
+		Assertions.assertNotEquals("vissie",driver.findElement(By.id("credential-password-field")).getText());
 	}
 
 	//	Write a test that views an existing set of credentials, verifies that the viewable password is unencrypted, edits the credentials, and verifies that the changes are displayed.
@@ -142,6 +143,8 @@ class CloudStorageApplicationTests {
 		resultPage.returnToHome(wait);
 		homePage.switchToCredentialsTab(wait);
 		Thread.sleep(1000);
+		homePage.displayEditCredentialModal(wait);
+		Assertions.assertEquals("vissie",driver.findElement(By.id("credential-password")).getAttribute("value"));
 		homePage.editCredential(wait);
 		resultPage.returnToHome(wait);
 		homePage.switchToCredentialsTab(wait);

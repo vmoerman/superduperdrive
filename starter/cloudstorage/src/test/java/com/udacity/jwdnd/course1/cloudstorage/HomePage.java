@@ -131,13 +131,17 @@ public class HomePage {
 
     public void editCredential(WebDriverWait wait) throws InterruptedException
     {
+        credentialUrlField.clear();
+        credentialUrlField.sendKeys("change");
+        credentialSubmitField.submit();
+    }
+
+    public void displayEditCredentialModal(WebDriverWait wait) throws InterruptedException
+    {
         wait.until(ExpectedConditions.elementToBeClickable(credentialEditButton));
         credentialEditButton.click();
         Thread.sleep(1000);
         wait.until(webDriver -> webDriver.findElement(By.id("credential-url")));
-        credentialUrlField.clear();
-        credentialUrlField.sendKeys("change");
-        credentialSubmitField.submit();
     }
 
     public void deleteCredential(WebDriverWait wait) throws InterruptedException
